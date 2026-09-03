@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Birthday Surprise ❤️</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Georgia, serif;
+    background: linear-gradient(135deg, #ffe1eb, #fff5f8);
+    color: #7b2945;
+    text-align: center;
+    overflow-x: hidden;
+}
+
+.screen {
+    min-height: 100vh;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 20px;
+    position: relative;
+}
+
+.screen.active {
+    display: flex;
+}
+
+h1 {
+    font-size: 42px;
+    margin: 10px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+p {
+    font-size: 19px;
+    line-height: 1.7;
+}
+
+button {
+    border: none;
+    border-radius: 30px;
+    padding: 15px 30px;
+    font-size: 17px;
+    background: #c73561;
+    color: white;
+    cursor: pointer;
+    margin-top: 20px;
+    box-shadow: 0 8px 20px rgba(120, 30, 60, .2);
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+.heart {
+    font-size: 80px;
+    animation: heartbeat 1.3s infinite;
+}
+
+@keyframes heartbeat {
+    50% {
+        transform: scale(1.15);
+    }
+}
+
+/* BALLOONS */
+
+.balloons {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 25px;
+    margin: 30px 0;
+}
+
+.balloon {
+    width: 85px;
+    height: 105px;
+    border-radius: 50% 50% 45% 45%;
+    background: #ef6f91;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 25px;
+    cursor: pointer;
+    position: relative;
+    animation: float 2.5s ease-in-out infinite;
+}
+
+.balloon:nth-child(2) {
+    background: #d68bd9;
+    animation-delay: .3s;
+}
+
+.balloon:nth-child(3) {
+    background: #f5a86b;
+    animation-delay: .6s;
+}
+
+.balloon:nth-child(4) {
+    background: #8fc9c3;
+    animation-delay: .9s;
+}
+
+.balloon::after {
+    content: "";
+    position: absolute;
+    width: 2px;
+    height: 45px;
+    background: #777;
+    bottom: -42px;
+}
+
+.balloon.popped {
+    animation: pop .3s forwards;
+}
+
+@keyframes float {
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+@keyframes pop {
+    to {
+        transform: scale(0);
+        opacity: 0;
+    }
+}
+
+/* PHOTOS */
+
+.photo-box {
+    width: 90%;
+    max-width: 350px;
+    height: 350px;
+    border-radius: 25px;
+    background: rgba(255,255,255,.6);
+    border: 3px dashed #d35a7b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    margin: 20px;
+}
+
+.photo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* CAKE */
+
+.cake {
+    font-size: 120px;
+    margin: 20px;
+}
+
+.candles {
+    font-size: 55px;
+    letter-spacing: 10px;
+}
+
+.off {
+    opacity: .25;
+}
+
+/* LETTER */
+
+.letter {
+    max-width: 650px;
+    background: rgba(255,255,255,.75);
+    padding: 30px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(120,30,60,.12);
+    text-align: left;
+}
+
+.signature {
+    text-align: right;
+    font-size: 20px;
+    margin-top: 30px;
+}
+
+/* CONFETTI */
+
+.confetti {
+    position: fixed;
+    width: 10px;
+    height: 15px;
+    top: -20px;
+    animation: fall 3s linear forwards;
+    z-index: 100;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(110vh) rotate(720deg);
+    }
+}
+
+.small {
+    font-size: 15px;
+    opacity: .7;
+}
+</style>
+</head>
+
+<body>
+
+<!-- SCREEN 1 -->
+
+<section class="screen active" id="screen1">
+
+    <div class="heart">❤️</div>
+
+    <h1>A Little Surprise For You...</h1>
+
+    <p>
+        I made something special<br>
+        just for you.
+    </p>
+
+    <button onclick="nextScreen(2)">
+        Tap to Begin ✨
+    </button>
+
+</section>
+
+
+<!-- SCREEN 2 -->
+
+<section class="screen" id="screen2">
+
+    <h2>Before We Begin... 🎈</h2>
+
+    <p>Pop all 4 balloons!</p>
+
+    <div class="balloons">
+
+        <div class="balloon" onclick="popBalloon(this)">
+            ❤️
+        </div>
+
+        <div class="balloon" onclick="popBalloon(this)">
+            🥰
+        </div>
+
+        <div class="balloon" onclick="popBalloon(this)">
+            😘
+        </div>
+
+        <div class="balloon" onclick="popBalloon(this)">
+            💕
+        </div>
+
+    </div>
+
+    <p id="balloonMessage"></p>
+
+    <button id="balloonNext"
+            style="display:none"
+            onclick="nextScreen(3)">
+        Continue ❤️
+    </button>
+
+</section>
+
+
+<!-- SCREEN 3 -->
+
+<section class="screen" id="screen3">
+
+    <h2>Our Little Memories 📸</h2>
+
+    <div class="photo-box">
+
+        <!-- PHOTO WILL BE ADDED LATER -->
+
+        <div>
+            <div style="font-size:60px">📸</div>
+            <p>Your photo will go here ❤️</p>
+        </div>
+
+    </div>
+
+    <p>
+        Some moments become memories.<br>
+        Some memories become forever. ❤️
+    </p>
+
+    <button onclick="nextScreen(4)">
+        There's More... ✨
+    </button>
+
+</section>
+
+
+<!-- SCREEN 4 -->
+
+<section class="screen" id="screen4">
+
+    <h2>Make A Wish 🎂</h2>
+
+    <div class="cake">🎂</div>
+
+    <div class="candles" id="candles">
+        🕯️ 🕯️ 🕯️ 🕯️
+    </div>
+
+    <p>
+        Close your eyes...<br>
+        Make a wish... ❤️
+    </p>
+
+    <button onclick="blowCandles()">
+        Blow Out The Candles 🕯️
+    </button>
+
+    <button id="cakeNext"
+            style="display:none"
+            onclick="nextScreen(5)">
+        Continue 🎉
+    </button>
+
+</section>
+
+
+<!-- SCREEN 5 -->
+
+<section class="screen" id="screen5">
+
+    <h2>One More Thing... 💌</h2>
+
+    <div class="letter">
+
+        <p>My Love,</p>
+
+        <p>
+            Happy Birthday to the most special person
+            in my life. ❤️
+        </p>
+
+        <p>
+            I don't know if words can ever explain
+            how much you mean to me.
+        </p>
+
+        <p>
+            Thank you for all the little moments,
+            the laughter, the craziness,
+            the support and simply for being you.
+        </p>
+
+        <p>
+            I hope this new year of your life brings
+            you everything your heart wishes for.
+        </p>
+
+        <p>
+            And no matter how many birthdays come,
+            I hope I get to celebrate every single one
+            of them with you. ❤️
+        </p>
+
+        <p class="signature">
+            Forever yours,<br>
+            ❤️ Me
+        </p>
+
+    </div>
+
+    <button onclick="nextScreen(6)">
+        One Last Surprise ❤️
+    </button>
+
+</section>
+
+
+<!-- SCREEN 6 -->
+
+<section class="screen" id="screen6">
+
+    <div class="heart">❤️</div>
+
+    <h1>Happy Birthday! 🎂</h1>
+
+    <h2>My Favourite Person ❤️</h2>
+
+    <p>
+        Here's to another year of laughter,<br>
+        love and beautiful memories together.
+    </p>
+
+    <p style="font-size:40px">
+        🎉 🎂 ❤️ 🎈 ✨
+    </p>
+
+    <p class="small">
+        Made with lots and lots of love ❤️
+    </p>
+
+</section>
+
+
+<script>
+
+let popped = 0;
+
+function nextScreen(number) {
+
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+    });
+
+    document.getElementById("screen" + number)
+        .classList.add("active");
+
+    window.scrollTo(0,0);
+}
+
+
+function popBalloon(balloon) {
+
+    if (balloon.classList.contains("popped")) {
+        return;
+    }
+
+    balloon.classList.add("popped");
+
+    popped++;
+
+    if (popped === 1) {
+        document.getElementById("balloonMessage").innerText =
+        "You are my favourite person ❤️";
+    }
+
+    if (popped === 2) {
+        document.getElementById("balloonMessage").innerText =
+        "My forever partner 🥰";
+    }
+
+    if (popped === 3) {
+        document.getElementById("balloonMessage").innerText =
+        "My favourite headache 😂❤️";
+    }
+
+    if (popped === 4) {
+
+        document.getElementById("balloonMessage").innerText =
+        "Okay... now the real surprise begins! ❤️";
+
+        document.getElementById("balloonNext")
+            .style.display = "inline-block";
+
+        createConfetti();
+    }
+}
+
+
+function blowCandles() {
+
+    document.getElementById("candles").innerHTML =
+        "✨ ✨ ✨ ✨";
+
+    document.getElementById("candles").classList.add("off");
+
+    document.getElementById("cakeNext")
+        .style.display = "inline-block";
+
+    createConfetti();
+}
+
+
+function createConfetti() {
+
+    for (let i = 0; i < 80; i++) {
+
+        let piece = document.createElement("div");
+
+        piece.className = "confetti";
+
+        piece.innerText =
+            ["❤️","💕","✨","🎉","💗"][Math.floor(Math.random()*5)];
+
+        piece.style.left =
+            Math.random() * 100 + "vw";
+
+        piece.style.animationDelay =
+            Math.random() * 1.5 + "s";
+
+        piece.style.fontSize =
+            (10 + Math.random() * 15) + "px";
+
+        document.body.appendChild(piece);
+
+        setTimeout(() => {
+            piece.remove();
+        }, 4500);
+    }
+}
+
+</script>
+
+</body>
+</html>
